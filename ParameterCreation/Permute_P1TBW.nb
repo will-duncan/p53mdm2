@@ -1,0 +1,1543 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     54586,       1535]
+NotebookOptionsPosition[     48324,       1354]
+NotebookOutlinePosition[     48679,       1370]
+CellTagsIndexPosition[     48636,       1367]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"ClearAll", "[", 
+  RowBox[{
+  "thetaMcP", ",", "thetaMcPT", ",", " ", "thetaMcMc", ",", " ", "thetaMnMc", 
+   ",", " ", "thetaPMn", ",", "thetaMnP", ",", " ", "LMcP", ",", " ", "UMcP", 
+   ",", " ", "LMcPT", ",", " ", "UMcPT", ",", " ", "LMcMc", ",", " ", "UMcMc",
+    ",", " ", "LMnMc", ",", " ", "UMnMc", ",", " ", "LPMn", ",", " ", "UPMn", 
+   ",", " ", "LMnP", ",", " ", "UMnP"}], "]"}]], "Input"],
+
+Cell["Permute variable order - hopefully will get different points", "Text",
+ CellChangeTimes->{{3.8196342543763247`*^9, 3.819634266949195*^9}, {
+  3.819930869218017*^9, 3.819930884738434*^9}}],
+
+Cell[BoxData[
+ RowBox[{"vars1", ":=", 
+  RowBox[{"{", 
+   RowBox[{
+   "LMcP", ",", " ", "UMcP", ",", " ", "LMcPT", ",", " ", "UMcPT", ",", " ", 
+    "LMcMc", ",", " ", "UMcMc", ",", " ", "LMnMc", ",", " ", "UMnMc", ",", 
+    " ", "LPMn", ",", " ", "UPMn", ",", " ", "LMnP", ",", " ", "UMnP", ",", 
+    " ", "thetaMcP", ",", "thetaMcPT", ",", " ", "thetaMcMc", ",", " ", 
+    "thetaMnMc", ",", " ", "thetaPMn"}], "}"}], " "}]], "Input",
+ CellChangeTimes->{{3.8196340481011343`*^9, 3.819634060065695*^9}, {
+  3.8196342882106657`*^9, 3.8196343129446487`*^9}, {3.8196343626103277`*^9, 
+  3.81963437440177*^9}, {3.8196349708325777`*^9, 3.819634991994356*^9}}],
+
+Cell[BoxData[{
+ RowBox[{"vars2", ":=", " ", 
+  RowBox[{"RandomSample", "[", "vars1", "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"vars3", ":=", " ", 
+  RowBox[{"RandomSample", "[", "vars1", "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"vars4", ":=", " ", 
+  RowBox[{"RandomSample", "[", "vars1", "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"vars5", ":=", " ", 
+  RowBox[{"RandomSample", "[", "vars1", "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"vars6", ":=", " ", 
+  RowBox[{"RandomSample", "[", "vars1", "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"vars7", ":=", " ", 
+  RowBox[{"RandomSample", "[", "vars1", "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"vars8", ":=", " ", 
+  RowBox[{"RandomSample", "[", "vars1", "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"vars9", ":=", " ", 
+  RowBox[{"RandomSample", "[", "vars1", "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"vars10", ":=", 
+  RowBox[{"RandomSample", "[", "vars1", "]"}]}]}], "Input",
+ CellChangeTimes->{{3.819634986618761*^9, 3.819635100770441*^9}}],
+
+Cell["Conditions", "Text",
+ CellChangeTimes->{{3.8196342462970943`*^9, 3.819634249575787*^9}}],
+
+Cell[BoxData[
+ RowBox[{"cond", ":=", 
+  RowBox[{
+   RowBox[{"0", " ", "<", " ", "LPMn"}], " ", "&&", " ", 
+   RowBox[{"LPMn", " ", "<", " ", "thetaMcP"}], " ", "&&", " ", 
+   RowBox[{"LPMn", " ", "<", " ", "thetaMcPT"}], " ", "&&", " ", 
+   RowBox[{"thetaMcP", " ", "<", " ", "UPMn"}], " ", "&&", " ", 
+   RowBox[{"thetaMcPT", " ", "<", " ", "UPMn"}], " ", "&&", " ", 
+   RowBox[{"LPMn", " ", "<", " ", "UPMn"}], " ", "&&", " ", 
+   RowBox[{"thetaMcP", " ", "<", " ", "thetaMcPT"}], " ", "&&", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"LMnP", "*", "LMnMc"}], " ", "<", " ", "thetaPMn"}], " ", "&&", 
+   " ", 
+   RowBox[{
+    RowBox[{"UMnP", "*", "LMnMc"}], " ", "<", " ", "thetaPMn"}], " ", "&&", 
+   " ", 
+   RowBox[{"thetaPMn", " ", "<", " ", 
+    RowBox[{"LMnP", "*", "UMnMc"}]}], " ", "&&", " ", 
+   RowBox[{"thetaPMn", " ", "<", " ", 
+    RowBox[{"UMnP", "*", "UMnMc"}]}], " ", "&&", " ", 
+   RowBox[{"0", " ", "<", " ", "LMnP"}], " ", "&&", " ", 
+   RowBox[{"LMnP", " ", "<", " ", "UMnP"}], " ", "&&", " ", 
+   RowBox[{"LPMn", " ", "<", " ", "1"}], " ", "&&", " ", 
+   RowBox[{"UPMn", " ", ">", " ", "1"}], " ", "&&", "\[IndentingNewLine]", 
+   RowBox[{"0", " ", "<", " ", "LMnMc"}], " ", "&&", " ", 
+   RowBox[{"LMnMc", " ", "<", " ", "UMnMc"}], " ", "&&", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"LMcP", " ", "-", " ", 
+     RowBox[{"UMcPT", "*", "UMcMc"}]}], " ", "<", " ", "thetaMcMc"}], " ", "&&",
+    " ", 
+   RowBox[{
+    RowBox[{"UMcP", " ", "-", " ", 
+     RowBox[{"UMcPT", "*", "UMcMc"}]}], " ", "<", " ", "thetaMcMc"}], " ", "&&",
+    " ", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"LMcP", " ", "-", " ", 
+     RowBox[{"UMcPT", "*", "LMcMc"}]}], " ", "<", " ", "thetaMcMc"}], " ", "&&", 
+   RowBox[{
+    RowBox[{"UMcP", " ", "-", " ", 
+     RowBox[{"LMcPT", "*", "UMcMc"}]}], " ", "<", " ", "thetaMcMc"}], " ", "&&",
+    "  ", 
+   RowBox[{
+    RowBox[{"UMcP", " ", "-", " ", 
+     RowBox[{"UMcPT", "*", "LMcMc"}]}], "<", " ", "thetaMcMc"}], "  ", "&&", 
+   " ", 
+   RowBox[{"thetaMcMc", " ", "<", " ", 
+    RowBox[{"UMcP", " ", "-", " ", 
+     RowBox[{"LMcPT", "*", "LMcMc"}]}]}], " ", "&&", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"LMcP", " ", "-", " ", 
+     RowBox[{"UMcPT", "*", "UMcMc"}]}], " ", "<", " ", "thetaMnMc"}], " ", "&&",
+    " ", 
+   RowBox[{
+    RowBox[{"UMcP", " ", "-", " ", 
+     RowBox[{"UMcPT", "*", "UMcMc"}]}], " ", "<", " ", "thetaMnMc"}], " ", "&&",
+    " ", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"LMcP", " ", "-", " ", 
+     RowBox[{"UMcPT", "*", "LMcMc"}]}], " ", "<", " ", "thetaMnMc"}], " ", "&&", 
+   RowBox[{
+    RowBox[{"UMcP", " ", "-", " ", 
+     RowBox[{"LMcPT", "*", "UMcMc"}]}], " ", "<", " ", "thetaMnMc"}], " ", "&&",
+    "  ", 
+   RowBox[{
+    RowBox[{"UMcP", " ", "-", " ", 
+     RowBox[{"UMcPT", "*", "LMcMc"}]}], "<", " ", "thetaMnMc"}], "  ", "&&", 
+   " ", 
+   RowBox[{"thetaMnMc", " ", "<", " ", 
+    RowBox[{"UMcP", " ", "-", " ", 
+     RowBox[{"LMcPT", "*", "LMcMc"}]}]}], " ", "&&", "\[IndentingNewLine]", 
+   RowBox[{"thetaMnMc", " ", "<", " ", "thetaMcMc"}], " ", "&&", 
+   "\[IndentingNewLine]", 
+   RowBox[{"LMcP", " ", "<", " ", "UMcP"}], " ", "&&", " ", 
+   RowBox[{"LMcPT", " ", "<", " ", "UMcPT"}], " ", "&&", " ", 
+   RowBox[{"LMcMc", " ", "<", " ", "UMcMc"}], " ", "&&", 
+   "\[IndentingNewLine]", 
+   RowBox[{"0", " ", "<", " ", "LMcP"}], " ", "&&", " ", 
+   RowBox[{"0", " ", "<", " ", "LMcPT"}], " ", "&&", " ", 
+   RowBox[{"0", " ", "<", " ", "LMcMc"}], " ", "&&", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"LMcP", " ", "-", " ", 
+     RowBox[{"UMcPT", "*", "UMcMc"}]}], " ", ">", " ", "0"}], " ", "&&", " ", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"UMcP", " ", "-", " ", 
+     RowBox[{"UMcPT", "*", "UMcMc"}]}], " ", ">", " ", "0"}], " ", "&&", " ", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"LMcP", " ", "-", " ", 
+     RowBox[{"UMcPT", "*", "LMcMc"}]}], " ", ">", " ", "0"}], " ", "&&", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"UMcP", " ", "-", " ", 
+     RowBox[{"LMcPT", "*", "UMcMc"}]}], " ", ">", " ", "0"}], " ", "&&", "  ",
+    "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"UMcP", " ", "-", " ", 
+     RowBox[{"UMcPT", "*", "LMcMc"}]}], ">", " ", "0"}]}]}]], "Input",
+ CellChangeTimes->{{3.8261023353117027`*^9, 3.8261023754289827`*^9}, {
+  3.826103060904419*^9, 3.826103073871214*^9}}],
+
+Cell["Get points", "Text",
+ CellChangeTimes->{{3.8199309408003263`*^9, 3.819930942694764*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FindInstance", "[", 
+  RowBox[{"cond", ",", "vars1", ",", " ", "Reals"}], "]"}]], "Input",
+ CellChangeTimes->{{3.8196340780888844`*^9, 3.819634104178419*^9}, 
+   3.819635134610059*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"LMcP", "\[Rule]", 
+     FractionBox["5", "2"]}], ",", 
+    RowBox[{"UMcP", "\[Rule]", "3"}], ",", 
+    RowBox[{"LMcPT", "\[Rule]", "1"}], ",", 
+    RowBox[{"UMcPT", "\[Rule]", "2"}], ",", 
+    RowBox[{"LMcMc", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"UMcMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"LMnMc", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"UMnMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"LPMn", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"UPMn", "\[Rule]", 
+     FractionBox["5", "2"]}], ",", 
+    RowBox[{"LMnP", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"UMnP", "\[Rule]", 
+     FractionBox["15", "16"]}], ",", 
+    RowBox[{"thetaMcP", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaMcPT", "\[Rule]", 
+     FractionBox["3", "2"]}], ",", 
+    RowBox[{"thetaMcMc", "\[Rule]", 
+     FractionBox["19", "8"]}], ",", 
+    RowBox[{"thetaMnMc", "\[Rule]", 
+     FractionBox["9", "4"]}], ",", 
+    RowBox[{"thetaPMn", "\[Rule]", 
+     FractionBox["217", "256"]}]}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{3.826103150461424*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"list1", ":=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"LMcP", "\[Rule]", 
+     FractionBox["5", "2"]}], ",", 
+    RowBox[{"UMcP", "\[Rule]", "3"}], ",", 
+    RowBox[{"LMcPT", "\[Rule]", "1"}], ",", 
+    RowBox[{"UMcPT", "\[Rule]", "2"}], ",", 
+    RowBox[{"LMcMc", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"UMcMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"LMnMc", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"UMnMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"LPMn", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"UPMn", "\[Rule]", 
+     FractionBox["5", "2"]}], ",", 
+    RowBox[{"LMnP", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"UMnP", "\[Rule]", 
+     FractionBox["15", "16"]}], ",", 
+    RowBox[{"thetaMcP", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaMcPT", "\[Rule]", 
+     FractionBox["3", "2"]}], ",", 
+    RowBox[{"thetaMcMc", "\[Rule]", 
+     FractionBox["19", "8"]}], ",", 
+    RowBox[{"thetaMnMc", "\[Rule]", 
+     FractionBox["9", "4"]}], ",", 
+    RowBox[{"thetaPMn", "\[Rule]", 
+     FractionBox["217", "256"]}]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.8220512171762857`*^9, 3.822051221131762*^9}, 
+   3.8261024557700768`*^9, 3.826103157671782*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FindInstance", "[", 
+  RowBox[{"cond", ",", "vars2", ",", " ", "Reals"}], "]"}]], "Input",
+ CellChangeTimes->{{3.8196340780888844`*^9, 3.819634104178419*^9}, 
+   3.819635134610059*^9, {3.822051227755525*^9, 3.82205122783857*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"UMnMc", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"UMnP", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaMnMc", "\[Rule]", 
+     FractionBox["25", "8"]}], ",", 
+    RowBox[{"LMnP", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"thetaMcMc", "\[Rule]", 
+     FractionBox["13", "4"]}], ",", 
+    RowBox[{"UMcMc", "\[Rule]", "2"}], ",", 
+    RowBox[{"LMnMc", "\[Rule]", 
+     FractionBox["7", "16"]}], ",", 
+    RowBox[{"LMcPT", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"UMcPT", "\[Rule]", "1"}], ",", 
+    RowBox[{"UPMn", "\[Rule]", 
+     FractionBox["5", "2"]}], ",", 
+    RowBox[{"LMcMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaPMn", "\[Rule]", 
+     FractionBox["77", "128"]}], ",", 
+    RowBox[{"thetaMcPT", "\[Rule]", 
+     FractionBox["3", "2"]}], ",", 
+    RowBox[{"thetaMcP", "\[Rule]", "1"}], ",", 
+    RowBox[{"LPMn", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"UMcP", "\[Rule]", "4"}], ",", 
+    RowBox[{"LMcP", "\[Rule]", "3"}]}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{3.826103160301708*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"list2", ":=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"UMnMc", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"UMnP", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaMnMc", "\[Rule]", 
+     FractionBox["25", "8"]}], ",", 
+    RowBox[{"LMnP", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"thetaMcMc", "\[Rule]", 
+     FractionBox["13", "4"]}], ",", 
+    RowBox[{"UMcMc", "\[Rule]", "2"}], ",", 
+    RowBox[{"LMnMc", "\[Rule]", 
+     FractionBox["7", "16"]}], ",", 
+    RowBox[{"LMcPT", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"UMcPT", "\[Rule]", "1"}], ",", 
+    RowBox[{"UPMn", "\[Rule]", 
+     FractionBox["5", "2"]}], ",", 
+    RowBox[{"LMcMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaPMn", "\[Rule]", 
+     FractionBox["77", "128"]}], ",", 
+    RowBox[{"thetaMcPT", "\[Rule]", 
+     FractionBox["3", "2"]}], ",", 
+    RowBox[{"thetaMcP", "\[Rule]", "1"}], ",", 
+    RowBox[{"LPMn", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"UMcP", "\[Rule]", "4"}], ",", 
+    RowBox[{"LMcP", "\[Rule]", "3"}]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.8220512296053333`*^9, 3.82205123229541*^9}, 
+   3.826102464805231*^9, 3.826103168682804*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FindInstance", "[", 
+  RowBox[{"cond", ",", "vars3", ",", " ", "Reals"}], "]"}]], "Input",
+ CellChangeTimes->{{3.8196340780888844`*^9, 3.819634104178419*^9}, 
+   3.819635134610059*^9, {3.822051235713626*^9, 3.822051236082637*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"LMcPT", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"thetaMcP", "\[Rule]", 
+     FractionBox["3", "2"]}], ",", 
+    RowBox[{"LMcP", "\[Rule]", 
+     FractionBox["5", "2"]}], ",", 
+    RowBox[{"thetaMcMc", "\[Rule]", 
+     FractionBox["19", "8"]}], ",", 
+    RowBox[{"thetaPMn", "\[Rule]", 
+     FractionBox["217", "256"]}], ",", 
+    RowBox[{"LMnMc", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"UMcMc", "\[Rule]", "2"}], ",", 
+    RowBox[{"UMnMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"LPMn", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"UMcP", "\[Rule]", "3"}], ",", 
+    RowBox[{"LMnP", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"thetaMnMc", "\[Rule]", 
+     FractionBox["9", "4"]}], ",", 
+    RowBox[{"thetaMcPT", "\[Rule]", "2"}], ",", 
+    RowBox[{"UPMn", "\[Rule]", 
+     FractionBox["5", "2"]}], ",", 
+    RowBox[{"UMcPT", "\[Rule]", "1"}], ",", 
+    RowBox[{"UMnP", "\[Rule]", 
+     FractionBox["15", "16"]}], ",", 
+    RowBox[{"LMcMc", "\[Rule]", "1"}]}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{3.82610317158537*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"list3", ":=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"LMcPT", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"thetaMcP", "\[Rule]", 
+     FractionBox["3", "2"]}], ",", 
+    RowBox[{"LMcP", "\[Rule]", 
+     FractionBox["5", "2"]}], ",", 
+    RowBox[{"thetaMcMc", "\[Rule]", 
+     FractionBox["19", "8"]}], ",", 
+    RowBox[{"thetaPMn", "\[Rule]", 
+     FractionBox["217", "256"]}], ",", 
+    RowBox[{"LMnMc", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"UMcMc", "\[Rule]", "2"}], ",", 
+    RowBox[{"UMnMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"LPMn", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"UMcP", "\[Rule]", "3"}], ",", 
+    RowBox[{"LMnP", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"thetaMnMc", "\[Rule]", 
+     FractionBox["9", "4"]}], ",", 
+    RowBox[{"thetaMcPT", "\[Rule]", "2"}], ",", 
+    RowBox[{"UPMn", "\[Rule]", 
+     FractionBox["5", "2"]}], ",", 
+    RowBox[{"UMcPT", "\[Rule]", "1"}], ",", 
+    RowBox[{"UMnP", "\[Rule]", 
+     FractionBox["15", "16"]}], ",", 
+    RowBox[{"LMcMc", "\[Rule]", "1"}]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.822051239031538*^9, 3.8220512423324947`*^9}, 
+   3.826102475988306*^9, 3.8261031813046637`*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FindInstance", "[", 
+  RowBox[{"cond", ",", "vars4", ",", " ", "Reals"}], "]"}]], "Input",
+ CellChangeTimes->{{3.8196340780888844`*^9, 3.819634104178419*^9}, 
+   3.819635134610059*^9, {3.822051245265525*^9, 3.8220512454859877`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"thetaMnMc", "\[Rule]", 
+     FractionBox["13", "4"]}], ",", 
+    RowBox[{"thetaPMn", "\[Rule]", 
+     FractionBox["77", "128"]}], ",", 
+    RowBox[{"thetaMcPT", "\[Rule]", 
+     FractionBox["7", "4"]}], ",", 
+    RowBox[{"UMcPT", "\[Rule]", "2"}], ",", 
+    RowBox[{"LMcPT", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaMcP", "\[Rule]", 
+     FractionBox["3", "4"]}], ",", 
+    RowBox[{"UMnMc", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"UMnP", "\[Rule]", "1"}], ",", 
+    RowBox[{"LMcP", "\[Rule]", 
+     FractionBox["9", "2"]}], ",", 
+    RowBox[{"UMcMc", "\[Rule]", "2"}], ",", 
+    RowBox[{"UMcP", "\[Rule]", "5"}], ",", 
+    RowBox[{"UPMn", "\[Rule]", "2"}], ",", 
+    RowBox[{"thetaMcMc", "\[Rule]", 
+     FractionBox["7", "2"]}], ",", 
+    RowBox[{"LMcMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"LMnP", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"LPMn", "\[Rule]", 
+     FractionBox["1", "4"]}], ",", 
+    RowBox[{"LMnMc", "\[Rule]", 
+     FractionBox["7", "16"]}]}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{3.8261031844898*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"list4", ":=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"thetaMnMc", "\[Rule]", 
+     FractionBox["13", "4"]}], ",", 
+    RowBox[{"thetaPMn", "\[Rule]", 
+     FractionBox["77", "128"]}], ",", 
+    RowBox[{"thetaMcPT", "\[Rule]", 
+     FractionBox["7", "4"]}], ",", 
+    RowBox[{"UMcPT", "\[Rule]", "2"}], ",", 
+    RowBox[{"LMcPT", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaMcP", "\[Rule]", 
+     FractionBox["3", "4"]}], ",", 
+    RowBox[{"UMnMc", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"UMnP", "\[Rule]", "1"}], ",", 
+    RowBox[{"LMcP", "\[Rule]", 
+     FractionBox["9", "2"]}], ",", 
+    RowBox[{"UMcMc", "\[Rule]", "2"}], ",", 
+    RowBox[{"UMcP", "\[Rule]", "5"}], ",", 
+    RowBox[{"UPMn", "\[Rule]", "2"}], ",", 
+    RowBox[{"thetaMcMc", "\[Rule]", 
+     FractionBox["7", "2"]}], ",", 
+    RowBox[{"LMcMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"LMnP", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"LPMn", "\[Rule]", 
+     FractionBox["1", "4"]}], ",", 
+    RowBox[{"LMnMc", "\[Rule]", 
+     FractionBox["7", "16"]}]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.822051247946858*^9, 3.822051250898127*^9}, 
+   3.826102486988096*^9, 3.826103191396269*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FindInstance", "[", 
+  RowBox[{"cond", ",", "vars5", ",", " ", "Reals"}], "]"}]], "Input",
+ CellChangeTimes->{{3.8196340780888844`*^9, 3.819634104178419*^9}, 
+   3.819635134610059*^9, {3.822051254643571*^9, 3.8220512548228827`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"UMcMc", "\[Rule]", "2"}], ",", 
+    RowBox[{"LPMn", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"LMcP", "\[Rule]", 
+     FractionBox["5", "2"]}], ",", 
+    RowBox[{"LMcPT", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"UMnP", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"LMnP", "\[Rule]", 
+     FractionBox["7", "16"]}], ",", 
+    RowBox[{"thetaMcP", "\[Rule]", 
+     FractionBox["3", "2"]}], ",", 
+    RowBox[{"UMcP", "\[Rule]", "3"}], ",", 
+    RowBox[{"LMnMc", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"thetaMcMc", "\[Rule]", 
+     FractionBox["19", "8"]}], ",", 
+    RowBox[{"thetaPMn", "\[Rule]", 
+     FractionBox["105", "128"]}], ",", 
+    RowBox[{"UPMn", "\[Rule]", 
+     FractionBox["7", "2"]}], ",", 
+    RowBox[{"UMnMc", "\[Rule]", "2"}], ",", 
+    RowBox[{"LMcMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaMnMc", "\[Rule]", 
+     FractionBox["9", "4"]}], ",", 
+    RowBox[{"UMcPT", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaMcPT", "\[Rule]", 
+     FractionBox["5", "2"]}]}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{3.826103193920128*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"list5", ":=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"UMcMc", "\[Rule]", "2"}], ",", 
+    RowBox[{"LPMn", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"LMcP", "\[Rule]", 
+     FractionBox["5", "2"]}], ",", 
+    RowBox[{"LMcPT", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"UMnP", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"LMnP", "\[Rule]", 
+     FractionBox["7", "16"]}], ",", 
+    RowBox[{"thetaMcP", "\[Rule]", 
+     FractionBox["3", "2"]}], ",", 
+    RowBox[{"UMcP", "\[Rule]", "3"}], ",", 
+    RowBox[{"LMnMc", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"thetaMcMc", "\[Rule]", 
+     FractionBox["19", "8"]}], ",", 
+    RowBox[{"thetaPMn", "\[Rule]", 
+     FractionBox["105", "128"]}], ",", 
+    RowBox[{"UPMn", "\[Rule]", 
+     FractionBox["7", "2"]}], ",", 
+    RowBox[{"UMnMc", "\[Rule]", "2"}], ",", 
+    RowBox[{"LMcMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaMnMc", "\[Rule]", 
+     FractionBox["9", "4"]}], ",", 
+    RowBox[{"UMcPT", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaMcPT", "\[Rule]", 
+     FractionBox["5", "2"]}]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.82205125742478*^9, 3.822051261564941*^9}, 
+   3.826102497519157*^9, 3.8261032011971188`*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FindInstance", "[", 
+  RowBox[{"cond", ",", "vars6", ",", " ", "Reals"}], "]"}]], "Input",
+ CellChangeTimes->{{3.8196340780888844`*^9, 3.819634104178419*^9}, 
+   3.819635134610059*^9, {3.822051264800317*^9, 3.822051265120611*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"UMnP", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"LMcP", "\[Rule]", 
+     FractionBox["5", "2"]}], ",", 
+    RowBox[{"UMcMc", "\[Rule]", "2"}], ",", 
+    RowBox[{"thetaMcP", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaMcPT", "\[Rule]", 
+     FractionBox["3", "2"]}], ",", 
+    RowBox[{"thetaMnMc", "\[Rule]", 
+     FractionBox["17", "8"]}], ",", 
+    RowBox[{"LPMn", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"LMnP", "\[Rule]", 
+     FractionBox["7", "16"]}], ",", 
+    RowBox[{"UMcP", "\[Rule]", "3"}], ",", 
+    RowBox[{"thetaPMn", "\[Rule]", 
+     FractionBox["105", "128"]}], ",", 
+    RowBox[{"LMnMc", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"thetaMcMc", "\[Rule]", 
+     FractionBox["9", "4"]}], ",", 
+    RowBox[{"UPMn", "\[Rule]", "2"}], ",", 
+    RowBox[{"UMnMc", "\[Rule]", "2"}], ",", 
+    RowBox[{"LMcMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"LMcPT", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"UMcPT", "\[Rule]", "1"}]}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{3.826103204196981*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"list6", ":=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"UMnP", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"LMcP", "\[Rule]", 
+     FractionBox["5", "2"]}], ",", 
+    RowBox[{"UMcMc", "\[Rule]", "2"}], ",", 
+    RowBox[{"thetaMcP", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaMcPT", "\[Rule]", 
+     FractionBox["3", "2"]}], ",", 
+    RowBox[{"thetaMnMc", "\[Rule]", 
+     FractionBox["17", "8"]}], ",", 
+    RowBox[{"LPMn", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"LMnP", "\[Rule]", 
+     FractionBox["7", "16"]}], ",", 
+    RowBox[{"UMcP", "\[Rule]", "3"}], ",", 
+    RowBox[{"thetaPMn", "\[Rule]", 
+     FractionBox["105", "128"]}], ",", 
+    RowBox[{"LMnMc", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"thetaMcMc", "\[Rule]", 
+     FractionBox["9", "4"]}], ",", 
+    RowBox[{"UPMn", "\[Rule]", "2"}], ",", 
+    RowBox[{"UMnMc", "\[Rule]", "2"}], ",", 
+    RowBox[{"LMcMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"LMcPT", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"UMcPT", "\[Rule]", "1"}]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.8220512674654016`*^9, 3.82205127042925*^9}, 
+   3.826102509581073*^9, 3.826103210546926*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FindInstance", "[", 
+  RowBox[{"cond", ",", "vars7", ",", " ", "Reals"}], "]"}]], "Input",
+ CellChangeTimes->{{3.8196340780888844`*^9, 3.819634104178419*^9}, 
+   3.819635134610059*^9, {3.822051274474337*^9, 3.822051274935011*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"UMcPT", "\[Rule]", "2"}], ",", 
+    RowBox[{"UPMn", "\[Rule]", 
+     FractionBox["7", "2"]}], ",", 
+    RowBox[{"thetaPMn", "\[Rule]", 
+     FractionBox["217", "256"]}], ",", 
+    RowBox[{"thetaMcPT", "\[Rule]", 
+     FractionBox["5", "2"]}], ",", 
+    RowBox[{"LMnMc", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"UMcMc", "\[Rule]", "2"}], ",", 
+    RowBox[{"thetaMnMc", "\[Rule]", 
+     FractionBox["17", "4"]}], ",", 
+    RowBox[{"LMnP", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"LMcMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaMcP", "\[Rule]", 
+     FractionBox["3", "2"]}], ",", 
+    RowBox[{"UMcP", "\[Rule]", "6"}], ",", 
+    RowBox[{"thetaMcMc", "\[Rule]", 
+     FractionBox["9", "2"]}], ",", 
+    RowBox[{"UMnMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"LMcPT", "\[Rule]", "1"}], ",", 
+    RowBox[{"LPMn", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"LMcP", "\[Rule]", "5"}], ",", 
+    RowBox[{"UMnP", "\[Rule]", 
+     FractionBox["15", "16"]}]}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{3.826103214385461*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"list7", ":=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"UMcPT", "\[Rule]", "2"}], ",", 
+    RowBox[{"UPMn", "\[Rule]", 
+     FractionBox["7", "2"]}], ",", 
+    RowBox[{"thetaPMn", "\[Rule]", 
+     FractionBox["217", "256"]}], ",", 
+    RowBox[{"thetaMcPT", "\[Rule]", 
+     FractionBox["5", "2"]}], ",", 
+    RowBox[{"LMnMc", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"UMcMc", "\[Rule]", "2"}], ",", 
+    RowBox[{"thetaMnMc", "\[Rule]", 
+     FractionBox["17", "4"]}], ",", 
+    RowBox[{"LMnP", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"LMcMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaMcP", "\[Rule]", 
+     FractionBox["3", "2"]}], ",", 
+    RowBox[{"UMcP", "\[Rule]", "6"}], ",", 
+    RowBox[{"thetaMcMc", "\[Rule]", 
+     FractionBox["9", "2"]}], ",", 
+    RowBox[{"UMnMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"LMcPT", "\[Rule]", "1"}], ",", 
+    RowBox[{"LPMn", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"LMcP", "\[Rule]", "5"}], ",", 
+    RowBox[{"UMnP", "\[Rule]", 
+     FractionBox["15", "16"]}]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.822051276890355*^9, 3.822051279842749*^9}, 
+   3.8261025192632103`*^9, 3.826103221625648*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FindInstance", "[", 
+  RowBox[{"cond", ",", "vars8", ",", " ", "Reals"}], "]"}]], "Input",
+ CellChangeTimes->{{3.8196340780888844`*^9, 3.819634104178419*^9}, 
+   3.819635134610059*^9, {3.822051282842786*^9, 3.822051283198944*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"thetaPMn", "\[Rule]", 
+     FractionBox["203", "256"]}], ",", 
+    RowBox[{"UMcMc", "\[Rule]", "2"}], ",", 
+    RowBox[{"thetaMcP", "\[Rule]", 
+     FractionBox["3", "2"]}], ",", 
+    RowBox[{"thetaMnMc", "\[Rule]", 
+     FractionBox["17", "4"]}], ",", 
+    RowBox[{"LMnMc", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"UMnMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"UMnP", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"UMcP", "\[Rule]", "6"}], ",", 
+    RowBox[{"UMcPT", "\[Rule]", "2"}], ",", 
+    RowBox[{"LMcPT", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaMcPT", "\[Rule]", 
+     FractionBox["5", "2"]}], ",", 
+    RowBox[{"LMcMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaMcMc", "\[Rule]", 
+     FractionBox["9", "2"]}], ",", 
+    RowBox[{"LMnP", "\[Rule]", 
+     FractionBox["105", "128"]}], ",", 
+    RowBox[{"LMcP", "\[Rule]", "5"}], ",", 
+    RowBox[{"UPMn", "\[Rule]", 
+     FractionBox["7", "2"]}], ",", 
+    RowBox[{"LPMn", "\[Rule]", 
+     FractionBox["1", "2"]}]}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{3.8261032263575897`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"list8", ":=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"thetaPMn", "\[Rule]", 
+     FractionBox["203", "256"]}], ",", 
+    RowBox[{"UMcMc", "\[Rule]", "2"}], ",", 
+    RowBox[{"thetaMcP", "\[Rule]", 
+     FractionBox["3", "2"]}], ",", 
+    RowBox[{"thetaMnMc", "\[Rule]", 
+     FractionBox["17", "4"]}], ",", 
+    RowBox[{"LMnMc", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"UMnMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"UMnP", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"UMcP", "\[Rule]", "6"}], ",", 
+    RowBox[{"UMcPT", "\[Rule]", "2"}], ",", 
+    RowBox[{"LMcPT", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaMcPT", "\[Rule]", 
+     FractionBox["5", "2"]}], ",", 
+    RowBox[{"LMcMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaMcMc", "\[Rule]", 
+     FractionBox["9", "2"]}], ",", 
+    RowBox[{"LMnP", "\[Rule]", 
+     FractionBox["105", "128"]}], ",", 
+    RowBox[{"LMcP", "\[Rule]", "5"}], ",", 
+    RowBox[{"UPMn", "\[Rule]", 
+     FractionBox["7", "2"]}], ",", 
+    RowBox[{"LPMn", "\[Rule]", 
+     FractionBox["1", "2"]}]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.822051285382691*^9, 3.822051288275277*^9}, 
+   3.8261025294042463`*^9, 3.826103242034401*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FindInstance", "[", 
+  RowBox[{"cond", ",", "vars9", ",", " ", "Reals"}], "]"}]], "Input",
+ CellChangeTimes->{{3.8196340780888844`*^9, 3.819634104178419*^9}, 
+   3.819635134610059*^9, {3.8220512931001987`*^9, 3.822051293765532*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"LMnP", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"UMcPT", "\[Rule]", "2"}], ",", 
+    RowBox[{"thetaMcMc", "\[Rule]", 
+     FractionBox["19", "8"]}], ",", 
+    RowBox[{"UMnP", "\[Rule]", "1"}], ",", 
+    RowBox[{"UPMn", "\[Rule]", "2"}], ",", 
+    RowBox[{"LMcP", "\[Rule]", 
+     FractionBox["5", "2"]}], ",", 
+    RowBox[{"LMcMc", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"UMcP", "\[Rule]", "3"}], ",", 
+    RowBox[{"thetaMnMc", "\[Rule]", 
+     FractionBox["9", "4"]}], ",", 
+    RowBox[{"LMnMc", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"UMcMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaPMn", "\[Rule]", 
+     FractionBox["21", "16"]}], ",", 
+    RowBox[{"thetaMcPT", "\[Rule]", 
+     FractionBox["7", "4"]}], ",", 
+    RowBox[{"LPMn", "\[Rule]", 
+     FractionBox["1", "4"]}], ",", 
+    RowBox[{"thetaMcP", "\[Rule]", 
+     FractionBox["3", "4"]}], ",", 
+    RowBox[{"UMnMc", "\[Rule]", "2"}], ",", 
+    RowBox[{"LMcPT", "\[Rule]", "1"}]}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{3.826103245667891*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"list9", ":=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"LMnP", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"UMcPT", "\[Rule]", "2"}], ",", 
+    RowBox[{"thetaMcMc", "\[Rule]", 
+     FractionBox["19", "8"]}], ",", 
+    RowBox[{"UMnP", "\[Rule]", "1"}], ",", 
+    RowBox[{"UPMn", "\[Rule]", "2"}], ",", 
+    RowBox[{"LMcP", "\[Rule]", 
+     FractionBox["5", "2"]}], ",", 
+    RowBox[{"LMcMc", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"UMcP", "\[Rule]", "3"}], ",", 
+    RowBox[{"thetaMnMc", "\[Rule]", 
+     FractionBox["9", "4"]}], ",", 
+    RowBox[{"LMnMc", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"UMcMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaPMn", "\[Rule]", 
+     FractionBox["21", "16"]}], ",", 
+    RowBox[{"thetaMcPT", "\[Rule]", 
+     FractionBox["7", "4"]}], ",", 
+    RowBox[{"LPMn", "\[Rule]", 
+     FractionBox["1", "4"]}], ",", 
+    RowBox[{"thetaMcP", "\[Rule]", 
+     FractionBox["3", "4"]}], ",", 
+    RowBox[{"UMnMc", "\[Rule]", "2"}], ",", 
+    RowBox[{"LMcPT", "\[Rule]", "1"}]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.8220512958286448`*^9, 3.822051299123301*^9}, 
+   3.826102540358535*^9, 3.826103254239739*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FindInstance", "[", 
+  RowBox[{"cond", ",", "vars10", ",", " ", "Reals"}], "]"}]], "Input",
+ CellChangeTimes->{{3.8196340780888844`*^9, 3.819634104178419*^9}, 
+   3.819635134610059*^9, 3.822051302606608*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"UMnMc", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"thetaPMn", "\[Rule]", 
+     FractionBox["77", "128"]}], ",", 
+    RowBox[{"UMnP", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaMnMc", "\[Rule]", 
+     FractionBox["25", "8"]}], ",", 
+    RowBox[{"LMcPT", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"LMnP", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"UMcMc", "\[Rule]", "2"}], ",", 
+    RowBox[{"UMcP", "\[Rule]", "4"}], ",", 
+    RowBox[{"thetaMcP", "\[Rule]", 
+     FractionBox["3", "2"]}], ",", 
+    RowBox[{"UMcPT", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaMcPT", "\[Rule]", 
+     FractionBox["5", "2"]}], ",", 
+    RowBox[{"thetaMcMc", "\[Rule]", 
+     FractionBox["13", "4"]}], ",", 
+    RowBox[{"LMcP", "\[Rule]", "3"}], ",", 
+    RowBox[{"LMcMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"LMnMc", "\[Rule]", 
+     FractionBox["7", "16"]}], ",", 
+    RowBox[{"UPMn", "\[Rule]", 
+     FractionBox["7", "2"]}], ",", 
+    RowBox[{"LPMn", "\[Rule]", 
+     FractionBox["1", "2"]}]}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{3.826103258224684*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"list10", ":=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"UMnMc", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"thetaPMn", "\[Rule]", 
+     FractionBox["77", "128"]}], ",", 
+    RowBox[{"UMnP", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaMnMc", "\[Rule]", 
+     FractionBox["25", "8"]}], ",", 
+    RowBox[{"LMcPT", "\[Rule]", 
+     FractionBox["1", "2"]}], ",", 
+    RowBox[{"LMnP", "\[Rule]", 
+     FractionBox["7", "8"]}], ",", 
+    RowBox[{"UMcMc", "\[Rule]", "2"}], ",", 
+    RowBox[{"UMcP", "\[Rule]", "4"}], ",", 
+    RowBox[{"thetaMcP", "\[Rule]", 
+     FractionBox["3", "2"]}], ",", 
+    RowBox[{"UMcPT", "\[Rule]", "1"}], ",", 
+    RowBox[{"thetaMcPT", "\[Rule]", 
+     FractionBox["5", "2"]}], ",", 
+    RowBox[{"thetaMcMc", "\[Rule]", 
+     FractionBox["13", "4"]}], ",", 
+    RowBox[{"LMcP", "\[Rule]", "3"}], ",", 
+    RowBox[{"LMcMc", "\[Rule]", "1"}], ",", 
+    RowBox[{"LMnMc", "\[Rule]", 
+     FractionBox["7", "16"]}], ",", 
+    RowBox[{"UPMn", "\[Rule]", 
+     FractionBox["7", "2"]}], ",", 
+    RowBox[{"LPMn", "\[Rule]", 
+     FractionBox["1", "2"]}]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.822051304343408*^9, 3.822051307401236*^9}, 
+   3.826102552935191*^9, 3.8261032660851*^9}],
+
+Cell[BoxData[{
+ RowBox[{"list1b", ":=", 
+  RowBox[{"Sort", "[", "list1", "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"list2b", ":=", 
+  RowBox[{"Sort", "[", "list2", "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"list3b", " ", ":=", " ", 
+  RowBox[{"Sort", "[", "list3", "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"list4b", " ", ":=", " ", 
+  RowBox[{"Sort", "[", "list4", "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"list5b", " ", ":=", " ", 
+  RowBox[{"Sort", "[", "list5", "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"list6b", " ", ":=", " ", 
+  RowBox[{"Sort", "[", "list6", "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"list7b", " ", ":=", " ", 
+  RowBox[{"Sort", "[", "list7", "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"list8b", " ", ":=", " ", 
+  RowBox[{"Sort", "[", "list8", "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"list9b", " ", ":=", " ", 
+  RowBox[{"Sort", "[", "list9", "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"list10b", " ", ":=", " ", 
+  RowBox[{"Sort", "[", "list10", "]"}]}]}], "Input",
+ CellChangeTimes->{{3.819977691755034*^9, 3.819977770374597*^9}, {
+  3.8199779267115707`*^9, 3.8199779550568132`*^9}, {3.819977996491355*^9, 
+  3.819978032658865*^9}}],
+
+Cell[BoxData[
+ RowBox[{"list", " ", ":=", " ", 
+  RowBox[{"{", 
+   RowBox[{
+   "list1b", ",", "list2b", ",", "list3b", ",", "list4b", ",", "list5b", ",", 
+    "list6b", ",", "list7b", ",", "list8b", ",", "list9b", ",", "list10b"}], 
+   "}"}]}]], "Input",
+ CellChangeTimes->{{3.81997746057452*^9, 3.8199774692700872`*^9}, {
+  3.8199780337184896`*^9, 3.819978045097198*^9}}],
+
+Cell["Verify uniqueness of points (want all false)", "Text",
+ CellChangeTimes->{{3.8199309603900023`*^9, 3.819930974859683*^9}, {
+  3.8220479723437757`*^9, 3.8220479740357447`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"For", "[", 
+  RowBox[{
+   RowBox[{"i", "=", "1"}], ",", 
+   RowBox[{"i", "<", "11"}], ",", 
+   RowBox[{"i", "++"}], ",", 
+   RowBox[{"For", "[", 
+    RowBox[{
+     RowBox[{"j", " ", "=", "1"}], ",", 
+     RowBox[{"j", "<", "11"}], ",", 
+     RowBox[{"j", "++"}], ",", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"i", "\[NotEqual]", "j"}], ",", 
+       RowBox[{"Print", "[", 
+        RowBox[{"SameQ", "[", 
+         RowBox[{
+          RowBox[{"list", "[", "i", "]"}], ",", 
+          RowBox[{"list", "[", "j", "]"}]}], "]"}], "]"}]}], "]"}]}], "]"}]}],
+   "]"}]], "Input",
+ CellChangeTimes->{{3.819930601054366*^9, 3.8199306079839687`*^9}, 
+   3.819930650215151*^9, {3.81993069964291*^9, 3.819930790799197*^9}, {
+   3.822049580386072*^9, 3.8220495806165524`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288399411*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.82610328841072*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288422366*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288433984*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288448634*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288461297*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032884730453`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032884847183`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288495912*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032885075483`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288519065*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288531631*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032885433903`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032885551147`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288566877*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032885787773`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032885907183`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288602727*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288614273*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032886264467`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288636381*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032886458263`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288655944*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288666497*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032886764307`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288686548*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.82610328869625*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032887065887`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288716666*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.82610328872651*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288736498*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288745962*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288804393*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032888164577`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288826478*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288837476*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032888487377`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288858713*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288869165*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288879198*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288889147*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288899831*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032889096622`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288919627*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288929339*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288940002*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032889519587`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032889616737`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288972883*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032889831533`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103288992845*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032890038023`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289013256*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289024008*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289034651*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032890445757`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032890550213`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289066311*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289076099*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289088071*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289097661*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289107444*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289118704*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289128937*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289139406*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289149961*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289160236*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032891706877`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289218808*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289229034*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289239846*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032892499866`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289259639*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289269602*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289279357*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289289686*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289301985*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032893119917`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289322133*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289331931*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289342243*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032893519382`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032893628693`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032893730087`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.8261032893828773`*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289418449*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289428557*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289440487*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.826103289451171*^9}],
+
+Cell[BoxData["False"], "Print",
+ CellChangeTimes->{3.822051361309567*^9, 3.82610328946084*^9}]
+}, Closed]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"Export", "[", 
+  RowBox[{"\"\<P1TBWnode1.csv\>\"", ",", " ", "list1b"}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Export", "[", 
+  RowBox[{"\"\<P1TBWnode2.csv\>\"", ",", " ", "list2b"}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Export", "[", 
+  RowBox[{"\"\<P1TBWnode3.csv\>\"", ",", " ", "list3b"}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Export", "[", 
+  RowBox[{"\"\<P1TBWnode4.csv\>\"", ",", " ", "list4b"}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Export", "[", 
+  RowBox[{"\"\<P1TBWnode5.csv\>\"", ",", " ", "list5b"}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Export", "[", 
+  RowBox[{"\"\<P1TBWnode6.csv\>\"", ",", " ", "list6b"}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Export", "[", 
+  RowBox[{"\"\<P1TBWnode7.csv\>\"", ",", " ", "list7b"}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Export", "[", 
+  RowBox[{"\"\<P1TBWnode8.csv\>\"", ",", " ", "list8b"}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Export", "[", 
+  RowBox[{"\"\<P1TBWnode9.csv\>\"", ",", " ", "list9b"}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Export", "[", 
+  RowBox[{"\"\<P1TBWnode10.csv\>\"", ",", " ", "list10b"}], "]"}]}], "Input",
+ CellChangeTimes->{{3.821873026629603*^9, 3.8218730424143667`*^9}, {
+  3.822047339323083*^9, 3.822047339358137*^9}, {3.822049616762027*^9, 
+  3.822049616799693*^9}, {3.822050973281404*^9, 3.822050973317378*^9}, {
+  3.822051385366633*^9, 3.822051385400831*^9}, {3.826103027951441*^9, 
+  3.826103043454276*^9}}],
+
+Cell[BoxData["\<\"P1TBWnode1.csv\"\>"], "Output",
+ CellChangeTimes->{3.8220513880593367`*^9, 3.826103298505362*^9}],
+
+Cell[BoxData["\<\"P1TBWnode2.csv\"\>"], "Output",
+ CellChangeTimes->{3.8220513880593367`*^9, 3.8261032985152063`*^9}],
+
+Cell[BoxData["\<\"P1TBWnode3.csv\"\>"], "Output",
+ CellChangeTimes->{3.8220513880593367`*^9, 3.826103298520939*^9}],
+
+Cell[BoxData["\<\"P1TBWnode4.csv\"\>"], "Output",
+ CellChangeTimes->{3.8220513880593367`*^9, 3.826103298526412*^9}],
+
+Cell[BoxData["\<\"P1TBWnode5.csv\"\>"], "Output",
+ CellChangeTimes->{3.8220513880593367`*^9, 3.826103298532157*^9}],
+
+Cell[BoxData["\<\"P1TBWnode6.csv\"\>"], "Output",
+ CellChangeTimes->{3.8220513880593367`*^9, 3.826103298537895*^9}],
+
+Cell[BoxData["\<\"P1TBWnode7.csv\"\>"], "Output",
+ CellChangeTimes->{3.8220513880593367`*^9, 3.8261032985436573`*^9}],
+
+Cell[BoxData["\<\"P1TBWnode8.csv\"\>"], "Output",
+ CellChangeTimes->{3.8220513880593367`*^9, 3.826103298549419*^9}],
+
+Cell[BoxData["\<\"P1TBWnode9.csv\"\>"], "Output",
+ CellChangeTimes->{3.8220513880593367`*^9, 3.826103298557858*^9}],
+
+Cell[BoxData["\<\"P1TBWnode10.csv\"\>"], "Output",
+ CellChangeTimes->{3.8220513880593367`*^9, 3.82610329856708*^9}]
+}, Open  ]]
+},
+WindowSize->{808, 605},
+WindowMargins->{{Automatic, 231}, {Automatic, 46}},
+FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (July 28, \
+2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 425, 7, 54, "Input"],
+Cell[986, 29, 193, 2, 30, "Text"],
+Cell[1182, 33, 654, 11, 54, "Input"],
+Cell[1839, 46, 990, 19, 201, "Input"],
+Cell[2832, 67, 94, 1, 30, "Text"],
+Cell[2929, 70, 4366, 101, 411, "Input"],
+Cell[7298, 173, 94, 1, 30, "Text"],
+Cell[CellGroupData[{
+Cell[7417, 178, 208, 4, 32, "Input"],
+Cell[7628, 184, 1167, 32, 126, "Output"]
+}, Open  ]],
+Cell[8810, 219, 1247, 33, 130, "Input"],
+Cell[CellGroupData[{
+Cell[10082, 256, 253, 4, 32, "Input"],
+Cell[10338, 262, 1142, 31, 127, "Output"]
+}, Open  ]],
+Cell[11495, 296, 1219, 32, 129, "Input"],
+Cell[CellGroupData[{
+Cell[12739, 332, 254, 4, 32, "Input"],
+Cell[12996, 338, 1166, 32, 127, "Output"]
+}, Open  ]],
+Cell[14177, 373, 1247, 33, 130, "Input"],
+Cell[CellGroupData[{
+Cell[15449, 410, 256, 4, 32, "Input"],
+Cell[15708, 416, 1139, 31, 127, "Output"]
+}, Open  ]],
+Cell[16862, 450, 1217, 32, 130, "Input"],
+Cell[CellGroupData[{
+Cell[18104, 486, 256, 4, 32, "Input"],
+Cell[18363, 492, 1190, 33, 126, "Output"]
+}, Open  ]],
+Cell[19568, 528, 1267, 34, 129, "Input"],
+Cell[CellGroupData[{
+Cell[20860, 566, 254, 4, 32, "Input"],
+Cell[21117, 572, 1142, 31, 126, "Output"]
+}, Open  ]],
+Cell[22274, 606, 1219, 32, 129, "Input"],
+Cell[CellGroupData[{
+Cell[23518, 642, 254, 4, 32, "Input"],
+Cell[23775, 648, 1143, 31, 127, "Output"]
+}, Open  ]],
+Cell[24933, 682, 1221, 32, 130, "Input"],
+Cell[CellGroupData[{
+Cell[26179, 718, 254, 4, 32, "Input"],
+Cell[26436, 724, 1147, 31, 127, "Output"]
+}, Open  ]],
+Cell[27598, 758, 1223, 32, 130, "Input"],
+Cell[CellGroupData[{
+Cell[28846, 794, 256, 4, 32, "Input"],
+Cell[29105, 800, 1139, 31, 127, "Output"]
+}, Open  ]],
+Cell[30259, 834, 1217, 32, 129, "Input"],
+Cell[CellGroupData[{
+Cell[31501, 870, 231, 4, 32, "Input"],
+Cell[31735, 876, 1166, 32, 127, "Output"]
+}, Open  ]],
+Cell[32916, 911, 1241, 33, 129, "Input"],
+Cell[34160, 946, 1161, 23, 222, "Input"],
+Cell[35324, 971, 372, 8, 32, "Input"],
+Cell[35699, 981, 181, 2, 30, "Text"],
+Cell[CellGroupData[{
+Cell[35905, 987, 798, 22, 32, "Input"],
+Cell[CellGroupData[{
+Cell[36728, 1013, 95, 1, 24, "Print"],
+Cell[36826, 1016, 94, 1, 24, "Print"],
+Cell[36923, 1019, 95, 1, 24, "Print"],
+Cell[37021, 1022, 95, 1, 24, "Print"],
+Cell[37119, 1025, 95, 1, 24, "Print"],
+Cell[37217, 1028, 95, 1, 24, "Print"],
+Cell[37315, 1031, 97, 1, 24, "Print"],
+Cell[37415, 1034, 97, 1, 24, "Print"],
+Cell[37515, 1037, 95, 1, 24, "Print"],
+Cell[37613, 1040, 97, 1, 24, "Print"],
+Cell[37713, 1043, 95, 1, 24, "Print"],
+Cell[37811, 1046, 95, 1, 24, "Print"],
+Cell[37909, 1049, 97, 1, 24, "Print"],
+Cell[38009, 1052, 97, 1, 24, "Print"],
+Cell[38109, 1055, 95, 1, 24, "Print"],
+Cell[38207, 1058, 97, 1, 24, "Print"],
+Cell[38307, 1061, 97, 1, 24, "Print"],
+Cell[38407, 1064, 95, 1, 24, "Print"],
+Cell[38505, 1067, 95, 1, 24, "Print"],
+Cell[38603, 1070, 97, 1, 24, "Print"],
+Cell[38703, 1073, 95, 1, 24, "Print"],
+Cell[38801, 1076, 97, 1, 24, "Print"],
+Cell[38901, 1079, 95, 1, 24, "Print"],
+Cell[38999, 1082, 95, 1, 24, "Print"],
+Cell[39097, 1085, 97, 1, 24, "Print"],
+Cell[39197, 1088, 95, 1, 24, "Print"],
+Cell[39295, 1091, 94, 1, 24, "Print"],
+Cell[39392, 1094, 97, 1, 24, "Print"],
+Cell[39492, 1097, 95, 1, 24, "Print"],
+Cell[39590, 1100, 94, 1, 24, "Print"],
+Cell[39687, 1103, 95, 1, 24, "Print"],
+Cell[39785, 1106, 95, 1, 24, "Print"],
+Cell[39883, 1109, 95, 1, 24, "Print"],
+Cell[39981, 1112, 97, 1, 24, "Print"],
+Cell[40081, 1115, 95, 1, 24, "Print"],
+Cell[40179, 1118, 95, 1, 24, "Print"],
+Cell[40277, 1121, 97, 1, 24, "Print"],
+Cell[40377, 1124, 95, 1, 24, "Print"],
+Cell[40475, 1127, 95, 1, 24, "Print"],
+Cell[40573, 1130, 95, 1, 24, "Print"],
+Cell[40671, 1133, 95, 1, 24, "Print"],
+Cell[40769, 1136, 95, 1, 24, "Print"],
+Cell[40867, 1139, 97, 1, 24, "Print"],
+Cell[40967, 1142, 95, 1, 24, "Print"],
+Cell[41065, 1145, 95, 1, 24, "Print"],
+Cell[41163, 1148, 95, 1, 24, "Print"],
+Cell[41261, 1151, 97, 1, 24, "Print"],
+Cell[41361, 1154, 97, 1, 24, "Print"],
+Cell[41461, 1157, 95, 1, 24, "Print"],
+Cell[41559, 1160, 97, 1, 24, "Print"],
+Cell[41659, 1163, 95, 1, 24, "Print"],
+Cell[41757, 1166, 97, 1, 24, "Print"],
+Cell[41857, 1169, 95, 1, 24, "Print"],
+Cell[41955, 1172, 95, 1, 24, "Print"],
+Cell[42053, 1175, 95, 1, 24, "Print"],
+Cell[42151, 1178, 97, 1, 24, "Print"],
+Cell[42251, 1181, 97, 1, 24, "Print"],
+Cell[42351, 1184, 95, 1, 24, "Print"],
+Cell[42449, 1187, 95, 1, 24, "Print"],
+Cell[42547, 1190, 95, 1, 24, "Print"],
+Cell[42645, 1193, 95, 1, 24, "Print"],
+Cell[42743, 1196, 95, 1, 24, "Print"],
+Cell[42841, 1199, 95, 1, 24, "Print"],
+Cell[42939, 1202, 95, 1, 24, "Print"],
+Cell[43037, 1205, 95, 1, 24, "Print"],
+Cell[43135, 1208, 95, 1, 24, "Print"],
+Cell[43233, 1211, 95, 1, 24, "Print"],
+Cell[43331, 1214, 97, 1, 24, "Print"],
+Cell[43431, 1217, 95, 1, 24, "Print"],
+Cell[43529, 1220, 95, 1, 24, "Print"],
+Cell[43627, 1223, 95, 1, 24, "Print"],
+Cell[43725, 1226, 97, 1, 24, "Print"],
+Cell[43825, 1229, 95, 1, 24, "Print"],
+Cell[43923, 1232, 95, 1, 24, "Print"],
+Cell[44021, 1235, 95, 1, 24, "Print"],
+Cell[44119, 1238, 95, 1, 24, "Print"],
+Cell[44217, 1241, 95, 1, 24, "Print"],
+Cell[44315, 1244, 97, 1, 24, "Print"],
+Cell[44415, 1247, 95, 1, 24, "Print"],
+Cell[44513, 1250, 95, 1, 24, "Print"],
+Cell[44611, 1253, 95, 1, 24, "Print"],
+Cell[44709, 1256, 97, 1, 24, "Print"],
+Cell[44809, 1259, 97, 1, 24, "Print"],
+Cell[44909, 1262, 97, 1, 24, "Print"],
+Cell[45009, 1265, 97, 1, 24, "Print"],
+Cell[45109, 1268, 95, 1, 24, "Print"],
+Cell[45207, 1271, 95, 1, 24, "Print"],
+Cell[45305, 1274, 95, 1, 24, "Print"],
+Cell[45403, 1277, 95, 1, 24, "Print"],
+Cell[45501, 1280, 94, 1, 24, "Print"]
+}, Closed]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[45644, 1287, 1480, 34, 222, "Input"],
+Cell[47127, 1323, 115, 1, 32, "Output"],
+Cell[47245, 1326, 117, 1, 32, "Output"],
+Cell[47365, 1329, 115, 1, 32, "Output"],
+Cell[47483, 1332, 115, 1, 32, "Output"],
+Cell[47601, 1335, 115, 1, 32, "Output"],
+Cell[47719, 1338, 115, 1, 32, "Output"],
+Cell[47837, 1341, 117, 1, 32, "Output"],
+Cell[47957, 1344, 115, 1, 32, "Output"],
+Cell[48075, 1347, 115, 1, 32, "Output"],
+Cell[48193, 1350, 115, 1, 32, "Output"]
+}, Open  ]]
+}
+]
+*)
+
