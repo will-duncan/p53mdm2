@@ -15,7 +15,37 @@ def theta_from_param(param):
     return [[param['thetaMcMc'],param['thetaMnMc']], [param['thetaPMn']], [param['thetaMcPT'], param['thetaMcP']]]
 
 
-def plot_time_series(sol,param,axs = None,plot_options = dict(),figsize = (16,4)):
+def plot_tseries_one_panel(sol,param,ax = None,plot_options = dict(),figsize = (10,5)):
+    """
+    Plot the ODE solution as a time series in a single panel. 
+
+    :param sol: output of solve_ivp
+    :param param: parameter dictionary 
+    :param ax: (optional) matplotlib axes object on which to plot
+    :param plot_options: (optional) dictionary of keyword arguments to pass to ax.plot
+    :return: if ax is None returns fig, ax where fig is a matplotlib figure object and ax 
+    is a matplotlib axes object. Otherwise returns None
+    """
+    var_names = VARIABLE_NAMES
+    colors = ['b','g','r']
+    if ax is None:
+        ax_passed = False
+        #create a figure and its ax
+        fig,ax = plt.subplots(1,1,figsize = figsize)
+    theta = theta_from_param(param)
+    for i in range(3):
+        #plot the time series
+        ax.plot(sol.t,sol.y[i],color = colors[i])
+        #plot the thresholds as horizontal lines
+        xlim = ax.get_xlim()
+        for threshold in theta[i]:
+            ax.plot(xlim,[threshold]*2,color = colors[i],linestyle='--')
+    if not ax_passed:
+        return fig, ax
+
+
+
+def plot_time_series(sol,param,axs = None,plot_options = dict(),figsize = (16,4),make_ticks = True,label = True):
     """
     Plot the ODE solution as a time series. 
 
@@ -31,6 +61,8 @@ def plot_time_series(sol,param,axs = None,plot_options = dict(),figsize = (16,4)
         axs_passed = False
         #create a figure and its axs
         fig, axs = plt.subplots(1,3,figsize = figsize)
+    else:
+        axs_passed = True
     theta = theta_from_param(param)
     for i in range(3):
         cur_ax = axs[i]
@@ -40,15 +72,20 @@ def plot_time_series(sol,param,axs = None,plot_options = dict(),figsize = (16,4)
         xlim = cur_ax.get_xlim()
         for threshold in theta[i]:
             cur_ax.plot(xlim,[threshold]*2,'k')
-        cur_ax.set_xlabel(var_names[i])
+        if label:
+            cur_ax.set_ylabel(var_names[i])
+            cur_ax.set_xlabel('t')
+        if not make_ticks:
+            cur_ax.set_xticks([])
+            cur_ax.set_yticks([])
     if not axs_passed:
         return fig, axs
 
 
-def plot_projections(sol,param,axs = None,plot_options = dict(),figsize = (12,5)):
+def plot_projections(sol,param,axs = None,plot_options = dict(),figsize = (12,5),make_ticks = True,label = True):
     """
     Plot two projections of the trajectory in phase space. The first is the (x,y)
-    projection and the second is the (y,z) projection
+    projection and the second is the (x,z) projection
 
     :param sol: output of solve_ivp
     :param param: parameter dictionary used by the ODE function 'fun'
@@ -64,13 +101,13 @@ def plot_projections(sol,param,axs = None,plot_options = dict(),figsize = (12,5)
         fig, (ax1,ax2) = plt.subplots(1,2,figsize = figsize)
     else:
         ax1, ax2 = axs
-    plot_phase_projection(ax1,sol,param,x_index = 0,y_index = 1,plot_options = plot_options)
-    plot_phase_projection(ax2,sol,param,x_index = 1,y_index = 2,plot_options = plot_options)
+    plot_phase_projection(ax1,sol,param,x_index = 0,y_index = 1,plot_options = plot_options,make_ticks = make_ticks,label = label)
+    plot_phase_projection(ax2,sol,param,x_index = 0,y_index = 2,plot_options = plot_options,make_ticks = make_ticks,label = label)
     if axs is None:
         return fig, (ax1,ax2)
 
 
-def plot_phase_projection(ax,sol,param,x_index,y_index,plot_options = dict()):
+def plot_phase_projection(ax,sol,param,x_index,y_index,plot_options = dict(),make_ticks = True,label = True):
     """
     Plot a projection of the trajectory in phase space.
 
@@ -88,13 +125,20 @@ def plot_phase_projection(ax,sol,param,x_index,y_index,plot_options = dict()):
     xlim = ax.get_xlim()
     ylim = ax.get_ylim()
     theta = theta_from_param(param)
+    #x thresholds
     for threshold in theta[x_index]:
         ax.plot([threshold]*2,ylim,'k')
+    if not make_ticks:
+        ax.set_xticks([])
+    #y thresholds
     for threshold in theta[y_index]:
         ax.plot(xlim,[threshold]*2,'k')
+    if not make_ticks:
+        ax.set_yticks([])
     #set x and y labels
-    ax.set_xlabel(var_names[x_index])
-    ax.set_ylabel(var_names[y_index])
+    if label:
+        ax.set_xlabel(var_names[x_index])
+        ax.set_ylabel(var_names[y_index])
 
 
 
@@ -373,11 +417,24 @@ def convert_to_dict(data):
     """
     newdata = []
     for i in range(len(data)):
-        newdata.append(data[0][i].split(" -> "))
+        newdata.append(data["0"][i].split(" -> "))
     for i in range(len(newdata)):
         newdata[i][1] = convert_to_float(newdata[i][1])
     params = dict(newdata)
     return params
+
+def convert_to_dict_2(data):
+    """
+    Returns list of dictionaries of parameters as keys, values. (Use as params throughout file)
+    Args:
+    data: Pandas dataframe with parameter sets as rows. Entries of form "LMcP -> 3"
+    """
+    alldata = []
+    for i in range(len(data)):
+        paramset = data.iloc[i,:].to_frame(name = "0")
+        paramsetdict = convert_to_dict(paramset)
+        alldata.append(paramsetdict)
+    return alldata
 
 def get_parameter_node(parameters):
     """
