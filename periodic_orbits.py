@@ -92,8 +92,8 @@ def get_periodic_domains(trajectory,theta,num_periods_to_verify = 2):
                 #update candidate sequence
                 periodic_candidate_sequence = rev_sequence[:-1]
                 num_periods_seen = 1
-    if t == n_time_points-1:
-        warnings.warn('get_periodic_domains looked at all time points but did not verify a periodic sequence to desired verification level of num_periods_to_verify = {}. The trajectory may not be periodic.'.format(num_periods_to_verify))
+    # if t == n_time_points-1:
+    #     warnings.warn('get_periodic_domains looked at all time points but did not verify a periodic sequence to desired verification level of num_periods_to_verify = {}. The trajectory may not be periodic.'.format(num_periods_to_verify))
     periodic_candidate_sequence.reverse()
     return periodic_candidate_sequence
 
